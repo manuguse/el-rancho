@@ -118,6 +118,9 @@ N = [A*(c1*0.4 + c2*0.3 + c3*0.3)]/10
 
 **Atenção**: Como indicado pela fórmula mostrada acima, **a nota atribuída à solução adotada será ponderada pelo desempenho do aluno (individualmente) durante a apresentação do trabalho**. Por exemplo, se o professor atribuir a nota 10 para a solução adotada pelo grupo mas o aluno receber nota 5 pela apresentação - devido ao desconhecimento dos conteúdos teóricos, práticos e/ou da solução do trabalho - a sua nota final do trabalho será 5. A ausência no dia da apresentação ou recusa de realização da apresentação do trabalho implicará em nota zero na apresentação, fazendo com que a nota atribuída ao aluno também seja zero.
 
+## Importante
+Ao desenvolver a sua solução, não utilize um repositório público, pois isso permitirá cópia de código sem consentimento dos autores. Se o grupo optar por utilizar repositório público e for detectado plágio, todos os envolvidos receberão nota zero.
+
 ## Orientações Finais
 1. É **obrigatório** o uso do código esqueleto fornecido. Não é permitido uso de PoolExecutor;
 2. Não abusem de variáveis compartilhadas. Usem quando necessário, declarando **apenas** no arquivo `shared.py`. O seu código ficará mais organizado e com um maior encapsulamento;
