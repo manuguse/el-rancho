@@ -15,14 +15,14 @@ class Crew(Thread):
 
     """ O membro da equipe espera um cliente. """    
     def wait(self):
-        print("O membro da equipe {} está esperando um cliente.".format(self._id))
+        print(f"O membro da equipe {self._id} está esperando um cliente.")
 
     """ O membro da equipe chama o cliente da senha ticket."""
     def call_client(self, ticket):
-        print("[CALLING] - O membro da equipe {} está chamando o cliente da senha {}.".format(self._id, ticket))
+        print(f"[CALLING] - O membro da equipe {self._id} está chamando o cliente da senha {ticket}.")
 
     def make_order(self, order):
-        print("[STORING] - O membro da equipe {} está anotando o pedido {} para o chef.".format(self._id, order))
+        print(f"[STORING] - O membro da equipe {self._id} está anotando o pedido {order} para o chef.")
 
     """ Thread do membro da equipe."""
     def run(self):

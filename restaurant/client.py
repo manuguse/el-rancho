@@ -17,24 +17,24 @@ class Client(Thread):
 
     """ Pega o ticket do totem."""
     def get_my_ticket(self):
-        print("[TICKET] - O cliente {} pegou o ticket.".format(self._id))
+        print(f"[TICKET] - O cliente {self._id} pegou o ticket.")
 
     """ Espera ser atendido pela equipe. """
     def wait_crew(self):
-        print("[WAIT] - O cliente {} esta aguardando atendimento.".format(self._id))
+        print(f"[WAIT] - O cliente {self._id} esta aguardando atendimento.")
 
     
     """ O cliente pensa no pedido."""
     def think_order(self):
-        print("[THINK] - O cliente {} esta pensando no que pedir.".format(self._id))
+        print(f"[THINK] - O cliente {self._id} esta pensando no que pedir.")
 
     """ O cliente faz o pedido."""
     def order(self):
-        print("[ORDER] - O cliente {} pediu algo.".format(self._id))
+        print(f"[ORDER] - O cliente {self._id} pediu algo.")
 
     """ Espera pelo pedido ficar pronto. """
     def wait_chef(self):
-        print("[WAIT MEAL] - O cliente {} esta aguardando o prato.".format(self._id))
+        print(f"[WAIT MEAL] - O cliente {self._id} esta aguardando o prato.")
     
     """
         O cliente reserva o lugar e se senta.
@@ -42,12 +42,12 @@ class Client(Thread):
         ter seu pedido pronto e possuir um lugar pronto pra sentar. 
     """
     def seat_and_eat(self):
-        print("[WAIT SEAT] - O cliente {} esta aguardando um lugar ficar livre".format(self._id))
-        print("[SEAT] - O cliente {} encontrou um lugar livre e sentou".format(self._id))
+        print(f"[WAIT SEAT] - O cliente {self._id} esta aguardando um lugar ficar livre")
+        print(f"[SEAT] - O cliente {self._id} encontrou um lugar livre e sentou")
 
     """ O cliente deixa o restaurante."""
     def leave(self):
-        print("[LEAVE] - O cliente {} saiu do restaurante".format(self._id))
+        print(f"[LEAVE] - O cliente {self._id} saiu do restaurante")
     
     """ Thread do cliente """
     def run(self):
