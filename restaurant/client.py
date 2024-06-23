@@ -5,7 +5,9 @@ from random import randint
 
 
 # imports do projeto
-import restaurant.shared as shared
+from . import shared as shared
+from .totem import Totem
+from .table import Table
 
 """
     Não troque o nome das variáveis compartilhadas, a assinatura e o nomes das funções.
@@ -18,6 +20,8 @@ class Client(Thread):
         super().__init__()
         self._semaphore = Semaphore()
         shared.clients.append(self)
+        self._waiter = None
+        self._ticket = None
         # Insira o que achar necessario no construtor da classe.
 
     """ Pega o ticket do totem."""
@@ -55,8 +59,9 @@ class Client(Thread):
         ter seu pedido pronto e possuir um lugar pronto pra sentar. 
     """
     def seat_and_eat(self):
-        if False == shared.table.seat(self):
+        if shared.table._semaphore._value == 0:
             print(f"[WAIT SEAT] - O cliente {self._id} esta aguardando um lugar ficar livre")
+        shared.table.seat(self)
         print(f"[SEAT] - O cliente {self._id} encontrou um lugar livre e sentou")
         sleep(randint(1,5))
 

@@ -1,5 +1,7 @@
 # imports do Python
 from random import randint
+import threading
+
 
 """
     Não troque o nome das variáveis compartilhadas, a assinatura e o nomes das funções.
@@ -32,9 +34,12 @@ class Totem:
 
         self.call_crew()
 
-        return ticket_number    
+        return ticket_number
 
     """ Insira sua sincronização."""
     def call_crew(self):
+        from . import shared
         print("[CALLING] - O totem chamou a equipe para atender o pedido da senha {}.".format(self.already_sampled[-1]))
+        with shared.new_ticket:
+            shared.new_ticket.notify()
 

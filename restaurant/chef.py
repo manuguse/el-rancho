@@ -4,7 +4,7 @@ from time import sleep
 from random import randint
 
 # Imports necessarios para executar as threads
-import restaurant.shared as shared
+from . import shared as shared
 
 """
     Não troque o nome das variáveis compartilhadas, a assinatura e o nomes das funções.
@@ -16,19 +16,28 @@ class Chef(Thread):
 
     """ Chef prepara um dos pedido que recebeu do membro da equipe."""
     def cook(self):
-        print(f"[COOKING] - O chefe esta preparando o pedido para a senha {0}.") # Modifique para o numero do ticket
+        with shared.lock_chef:
+            self._now_cooking = shared.client_waiting_chef.pop(0)
+        print(f"[COOKING] - O chefe esta preparando o pedido para a senha {self._now_cooking._ticket}.")
         sleep(randint(1,5))
 
     """ Chef serve o pedido preparado."""
     def serve(self):
-        print(f"[READY] - O chefe está servindo o pedido para a senha {0}.") # Modificar para o numero do ticket
+        print(f"[READY] - O chefe está servindo o pedido para a senha {self._now_cooking._ticket}.")
+        self._now_cooking._semaphore.release()
+        shared.chef_attended += 1
+        for client in shared.client_waiting_chef:
+            print(f"[WAITING] - O cliente {client._id} está esperando o pedido.")
     
     """ O chefe espera algum pedido vindo da equipe."""
     def wait_order(self):
         print("O chefe está esperando algum pedido.")
+        with shared.new_order:
+            shared.new_order.wait()
 
     """ Thread do chefe."""
     def run(self):
-        self.wait_order()
-        self.cook()
-        self.serve()
+        while shared.chef_attended < shared.max_clients:
+            self.wait_order()
+            self.cook()
+            self.serve()
