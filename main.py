@@ -21,6 +21,7 @@ def definitions(argv, threads):
     """
     shared.totem = Totem(argv.clients)
     shared.table._semaphore._value = argv.seats
+    shared.table._number = argv.seats
     shared.max_clients = argv.clients
 
 def close_all(argv, threads):

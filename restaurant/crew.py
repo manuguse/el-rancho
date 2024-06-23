@@ -19,9 +19,10 @@ class Crew(Thread):
 
     """ O membro da equipe espera um cliente. """    
     def wait(self):
-        print(f"O membro da equipe {self._id} está esperando um cliente.")    
         with shared.new_ticket:
-            shared.new_ticket.wait()
+            if len(shared.totem.call) == 0:
+                print(f"O membro da equipe {self._id} está esperando um cliente.")    
+                shared.new_ticket.wait()
 
     """ O membro da equipe chama o cliente da senha ticket."""
     def call_client(self, ticket):

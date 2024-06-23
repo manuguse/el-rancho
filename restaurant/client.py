@@ -58,12 +58,15 @@ class Client(Thread):
         Lembre-se que antes de comer o cliente deve ser atendido pela equipe, 
         ter seu pedido pronto e possuir um lugar pronto pra sentar. 
     """
-    def seat_and_eat(self):
-        if shared.table._semaphore._value == 0:
-            print(f"[WAIT SEAT] - O cliente {self._id} esta aguardando um lugar ficar livre")
-        shared.table.seat(self)
+    def seat_and_eat(self): #arrumar a lógica, não está avisando se não achar lugar
+        
+        with shared.lock_table:
+            if shared.table._semaphore._value == 0:
+                print(f"[WAIT SEAT] - O cliente {self._id} esta aguardando um lugar ficar livre")
+            shared.table.seat(self)
         print(f"[SEAT] - O cliente {self._id} encontrou um lugar livre e sentou")
-        sleep(randint(1,5))
+        print(shared.table._semaphore._value)
+        sleep(randint(1,3))
 
     """ O cliente deixa o restaurante."""
     def leave(self):

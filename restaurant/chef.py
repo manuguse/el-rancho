@@ -26,14 +26,13 @@ class Chef(Thread):
         print(f"[READY] - O chefe está servindo o pedido para a senha {self._now_cooking._ticket}.")
         self._now_cooking._semaphore.release()
         shared.chef_attended += 1
-        for client in shared.client_waiting_chef:
-            print(f"[WAITING] - O cliente {client._id} está esperando o pedido.")
     
     """ O chefe espera algum pedido vindo da equipe."""
     def wait_order(self):
-        print("O chefe está esperando algum pedido.")
         with shared.new_order:
-            shared.new_order.wait()
+            if len(shared.client_waiting_chef) == 0:
+                print("O chefe está esperando algum pedido.")
+                shared.new_order.wait()
 
     """ Thread do chefe."""
     def run(self):

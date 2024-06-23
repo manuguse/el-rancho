@@ -8,6 +8,7 @@ class Table:
     def __init__(self,number):
         self._number = number
         self._semaphore = Semaphore(number)
+        self._seated = 0
         # Insira o que achar necessario no construtor da classe.
     
     """ O cliente se senta na mesa."""

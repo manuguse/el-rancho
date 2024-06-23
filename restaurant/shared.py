@@ -13,6 +13,7 @@ max_clients = 0
 crew_attended = 0
 chef_attended = 0
 lock_totem = Lock()
+lock_table = Lock()
 new_ticket = Condition()
 lock_crew = Lock()
 lock_chef = Lock()
