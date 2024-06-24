@@ -38,8 +38,8 @@ class Totem:
 
     """ Insira sua sincronização."""
     def call_crew(self):
-        from . import shared
+        from . import shared #necessário para o acesso à condição de novo ticket
         print("[CALLING] - O totem chamou a equipe para atender o pedido da senha {}.".format(self.already_sampled[-1]))
-        with shared.new_ticket:
-            shared.new_ticket.notify()
+        with shared.new_ticket: #com o lock da condição de novo ticket
+            shared.new_ticket.notify() #notifica a equipe que há um novo ticket
 
