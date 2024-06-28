@@ -1,7 +1,6 @@
 # imports do Python
 from random import randint
-import threading
-
+from . import shared # necessário para o acesso à condição de novo ticket
 
 """
     Não troque o nome das variáveis compartilhadas, a assinatura e o nomes das funções.
@@ -13,7 +12,6 @@ class Totem:
         self.already_sampled = list()
         self.maximum_ticket_number = number_of_clients * 5
         self.call = list()
-        # Insira o que achar necessario no construtor da classe.
 
     """ 
         A função get_ticket não pode ser alterada. 
@@ -38,8 +36,6 @@ class Totem:
 
     """ Insira sua sincronização."""
     def call_crew(self):
-        from . import shared #necessário para o acesso à condição de novo ticket
         print("[CALLING] - O totem chamou a equipe para atender o pedido da senha {}.".format(self.already_sampled[-1]))
-        with shared.new_ticket: #com o lock da condição de novo ticket
-            shared.new_ticket.notify() #notifica a equipe que há um novo ticket
-
+        with shared.new_ticket: # com o lock da condição de novo ticket
+            shared.new_ticket.notify() # notifica a equipe que há um novo ticket

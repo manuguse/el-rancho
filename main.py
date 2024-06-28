@@ -8,20 +8,18 @@ from restaurant.client import Client
 from restaurant.crew import Crew
 from restaurant.chef import Chef
 from restaurant.totem import Totem
-from restaurant.table import Table
 
 from restaurant import shared as shared
-# Importe o que achar necessario aqui
-# import my_module
+
 
 def definitions(argv, threads):
     """
     Esse espaco e reservado para voce definir variaveis globais que serao utilizadas por todas as threads.
     Lembre-se de criar as variaveis globais no arquivo restaurant/shared.py
     """
-    shared.totem = Totem(argv.clients) #inicializa o totem com o número de clientes
-    shared.table._semaphore._value = argv.seats #atualiza o semáforo da mesa com o número de lugares
-    shared.max_clients = argv.clients #atualiza o valor máximo de clientes
+    shared.totem = Totem(argv.clients) # inicializa o totem com o número de clientes
+    shared.table._semaphore._value = argv.seats # atualiza o semáforo da mesa com o número de lugares
+    shared.max_clients = argv.clients # atualiza o valor máximo de clientes
 
 def close_all(argv, threads):
     """
