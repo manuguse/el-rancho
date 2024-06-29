@@ -1,4 +1,5 @@
 from threading import Semaphore
+from . import shared as shared
 """
     Não troque o nome das variáveis compartilhadas, a assinatura e o nomes das funções.
 """
@@ -15,5 +16,5 @@ class Table:
     
     """ O cliente deixa a mesa."""
     def leave(self, client):
+        shared.table._semaphore.release() # quanto faz com o self ele não está atualizando em shared
         self._semaphore.release() # aumenta um lugar na mesa
-

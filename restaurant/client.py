@@ -15,12 +15,10 @@ class Client(Thread):
     def __init__(self, i):
         self._id = i
         super().__init__()
-        self._semaphore = Semaphore() # semáforo pessoal do cliente para controlar o fluxo de execução
-        self._semaphore._value = 0 # inicializa o semáforo com 0 para bloquear o cliente na próxima chamada
+        self._semaphore = Semaphore(0) # semáforo pessoal do cliente para controlar o fluxo de execução
         shared.clients.append(self) # adiciona o cliente à lista de clientes
         self._waiter = None # membro da equipe que atendeu o cliente
         self._ticket = None # número do ticket do cliente
-        # Insira o que achar necessario no construtor da classe.
 
     """ Pega o ticket do totem."""
     def get_my_ticket(self):
@@ -58,9 +56,9 @@ class Client(Thread):
         ter seu pedido pronto e possuir um lugar pronto pra sentar. 
     """
     def seat_and_eat(self):
-        with shared.lock_table: # o lock garante que duas pessoas não tentem simultaneamente sentar na mesa
-            if shared.table._semaphore._value == 0: # se não houver lugar na mesa
-                print(f"[WAIT SEAT] - O cliente {self._id} esta aguardando um lugar ficar livre")
+        print(f"[WAIT SEAT] - O cliente {self._id} esta aguardando um lugar ficar livre")
+        shared.table._semaphore.acquire() # ocupa um lugar na mesa, se não for possível aguarda um lugar vago
+        with shared.lock_table: # garante que não haverá acesso concorrente à mesa
             shared.table.seat(self) # chama a função seat da mesa para o cliente sentar
         print(f"[SEAT] - O cliente {self._id} encontrou um lugar livre e sentou")
         sleep(randint(1,3)) # cliente come por um tempo aleatório
