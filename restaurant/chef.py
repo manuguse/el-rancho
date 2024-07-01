@@ -31,8 +31,10 @@ class Chef(Thread):
     
     """ O chefe espera algum pedido vindo da equipe."""
     def wait_order(self):
-        print("O chefe está esperando um pedido.")
-        shared.new_order.acquire()
+        pedidos_na_fila = shared.new_order.acquire(blocking=False)
+        if not pedidos_na_fila:
+            print("O chefe está esperando um pedido.")
+            shared.new_order.acquire()
 
     """ Thread do chefe."""
     def run(self):

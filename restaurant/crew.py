@@ -15,9 +15,11 @@ class Crew(Thread):
 
     """ O membro da equipe espera um cliente. """    
     def wait(self):
-        print(f"O membro da equipe {self._id} está esperando um cliente.")
-        shared.new_ticket.acquire()
-
+        clientes_na_fila = shared.new_ticket.acquire(blocking=False) # verifica se clientes na fila para serem atendidos
+        if not clientes_na_fila: # se não tiver, printa que está esperando um cliente
+            print(f"O membro da equipe {self._id} está esperando um cliente.")
+            shared.new_ticket.acquire() # aguarda a notificação de um novo ticket
+        
     """ O membro da equipe chama o cliente da senha ticket."""
     def call_client(self, ticket):
         print(f"[CALLING] - O membro da equipe {self._id} está chamando o cliente da senha {ticket}.")
@@ -38,14 +40,12 @@ class Crew(Thread):
 
     """ Thread do membro da equipe."""
     def run(self):
-        
-        while shared.lock_crew.acquire(): # adquire o lock do controle de quantos clientes já foram atendidos pela equipe
-            if shared.crew_served == shared.max_clients: # se o número de clientes atendidos for igual ao número máximo de clientes
-                shared.lock_crew.release() # libera o lock
-                break # encerra o loop para encerrar a execução da thread
-            order = shared.crew_served # atualiza o número do pedido
-            shared.crew_served += 1 # incrementa o contador de clientes atendidos
-            shared.lock_crew.release() # libera o lock do controle de quantos clientes já foram atendidos pela equipe
+        while True:
+            with shared.lock_crew: 
+                order = shared.crew_served
+                if order == shared.max_clients:
+                        return
+                shared.crew_served += 1 
             self.wait()
             with shared.lock_totem: # garante que não haverá acesso concorrente à lista de tickets
                 next_client = min(shared.totem.call) # chama a menor senha da lista de tickets

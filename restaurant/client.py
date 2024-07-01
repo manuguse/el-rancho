@@ -57,9 +57,7 @@ class Client(Thread):
     """
     def seat_and_eat(self):
         print(f"[WAIT SEAT] - O cliente {self._id} esta aguardando um lugar ficar livre")
-        shared.table._semaphore.acquire() # ocupa um lugar na mesa, se não for possível aguarda um lugar vago
-        with shared.lock_table: # garante que não haverá acesso concorrente à mesa
-            shared.table.seat(self) # chama a função seat da mesa para o cliente sentar
+        shared.table.seat(self) # ocupa um lugar na mesa, se não for possível aguarda um lugar vago
         print(f"[SEAT] - O cliente {self._id} encontrou um lugar livre e sentou")
         sleep(randint(1,3)) # cliente come por um tempo aleatório
 

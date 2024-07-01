@@ -16,5 +16,4 @@ class Table:
     
     """ O cliente deixa a mesa."""
     def leave(self, client):
-        shared.table._semaphore.release() # quanto faz com o self ele não está atualizando em shared
         self._semaphore.release() # aumenta um lugar na mesa
